@@ -4,15 +4,14 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
   url: https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  skip: true   # [win]
-  number: 0
+  number: 1
   run_exports:
     weak:
       - {{ name }} ={{ version }}
@@ -20,6 +19,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
   host:
     - perl
     - perl-extutils-installpaths
@@ -27,6 +27,9 @@ requirements:
     - perl-extutils-helpers
   run:
     - perl
+    - perl-extutils-installpaths
+    - perl-extutils-config
+    - perl-extutils-helpers
 
 test:
   imports:
@@ -35,9 +38,7 @@ test:
 about:
   home: https://metacpan.org/pod/Module::Build::Tiny
   license: GPL-1.0-or-later OR Artistic-1.0-Perl
-  license_file:
-    - {{ environ["PREFIX"] }}/man/man1/perlartistic.1
-    - {{ environ["PREFIX"] }}/man/man1/perlgpl.1
+  license_file: LICENSE
   summary: 'A tiny replacement for Module::Build'
 
 extra:
